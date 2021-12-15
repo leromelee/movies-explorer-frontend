@@ -1,0 +1,186 @@
+.about-project {
+  padding: 70px 18px;
+  background-color: #fff;
+}
+
+.section__title {
+  padding-bottom: 28px;
+  margin: 0;
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: 400;
+  border-bottom: 1px solid #000;
+  letter-spacing: -0.04em
+}
+
+.about__items {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 60px 0 60px 0;
+  list-style-type: none;
+}
+
+.about__heading {
+  margin: 0 0 16px 0;
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: 400;
+  letter-spacing: -0.04em;
+}
+
+.about__item-desc {
+  margin: 0;
+
+  font-size: 11px;
+  line-height: 16px;
+}
+
+.about__weeks {
+  width: 100%;
+  display: flex;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+.about__week {
+  text-align: center;
+  min-width: 100px;
+  flex-grow: 2;
+}
+
+.about__week_extended {
+  flex-grow: 12;
+}
+
+.about__week-heading {
+  padding: 11px 10px;
+  margin: 0 0 10px 0;
+  font-size: 11px;
+  line-height: 13px;
+  font-weight: 400;
+  color: #000;
+  background-color: #2BE080;
+}
+
+.about__week-heading_light {
+  color: #000;
+  background-color: #f2f2f2;
+}
+
+.about__week-desc {
+  margin: 0;
+  color: #a0a0a0;
+  font-size: 11px;
+  line-height: 13px;
+}
+
+
+@media (min-width: 1280px) {
+  .about-project {
+    padding: 110px 70px;
+  }
+
+  .about__items {
+    gap: 55px;
+  }
+
+  .about__items {
+    margin-top: 110px;
+    margin-bottom: 110px;
+  }
+
+  .about__heading {
+    margin-bottom: 25px;
+  }
+
+  .about__item-desc {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .about__week {
+    min-width: 228px;
+  }
+
+  .about__week-heading {
+    padding-top: 9px;
+  }
+
+  .about__week-desc {
+    font-weight: 500;
+  }
+}
+
+@media (min-width: 768px) {
+  .about-project {
+    padding: 90px 50px;
+  }
+
+  .section__title {
+    font-size: 22px;
+    line-height: 27px;
+  }
+
+  .about__items {
+    flex-direction: row;
+    gap: 35px;
+    margin-top: 70px;
+    margin-bottom: 93px;
+  }
+
+  .about__heading {
+    margin-bottom: 22px;
+
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  .about__item-desc {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .about__week {
+    min-width: 140px;
+  }
+
+  .about__week-heading {
+    padding-top: 8px;
+    margin-bottom: 11px;
+    font-size: 14px;
+    line-height: 17px;
+  }
+
+  .about__week-desc {
+    font-size: 14px;
+    line-height: 17px;
+  }
+}
+
+@media (min-width: 425px) {
+  .about-project {
+    padding: 80px 25px;
+  }
+
+  .section__title {
+    padding-bottom: 23px;
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  .about__items {
+    margin-top: 65px;
+    margin-bottom: 76px;
+  }
+
+  .about__heading {
+    font-size: 19px;
+    line-height: 23px;
+  }
+
+  .about__week {
+    min-width: 120px;
+  }
+}
