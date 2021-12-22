@@ -8,11 +8,11 @@
   grid-template-columns: 1fr;
   grid-template-rows: repeat(4, min-content);
   grid-template-areas:
-  'photo'
-  'name'
-  'brief'
-  'biography'
-  'links';
+    'photo'
+    'name'
+    'brief'
+    'biography'
+    'links';
   margin-top: 60px;
 }
 
@@ -167,10 +167,10 @@
     grid-template-columns: 1fr min-content;
     grid-template-rows: repeat(3, min-content) 1fr;
     grid-template-areas:
-    'name photo'
-    'brief photo'
-    'biography photo'
-    'links photo';
+      'name photo'
+      'brief photo'
+      'biography photo'
+      'links photo';
     column-gap: 50px;
     margin-top: 65px;
   }

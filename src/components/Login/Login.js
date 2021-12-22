@@ -1,35 +1,89 @@
-import { Link } from 'react-router-dom';
-import { appRoutes } from '../../utils/constants';
-import Header from '../Header/Header';
-import './Login.css';
-import React from 'react';
+import React, { useEffect } from 'react';
 
-export default function Login() {
+import FormAuth from '../FormAuth/FormAuth';
+import useValidForm from '../../hooks/useValidForm';
+
+export default function Login({
+  onLogin, isMessageErrorAPI, sendingData, messageSendingData, isDisabledInput,
+}) {
+  const {
+    values, errors, isValidForm, handleChange, resetForm,
+  } = useValidForm();
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    onLogin({
+      email: values.email,
+      password: values.password,
+    });
+  };
+
+  useEffect(() => {
+    resetForm();
+  }, [resetForm]);
+
   return (
-    <>
-      <Header />
-      <main>
-        <section className='login'>
-          <form className='form login__form' name='form-login' onSubmit={() => {}}>
-            <h1 className='form__head-auth'>Рады видеть!</h1>
-            <label className='form__label-auth'>E-mail
-              <input className='form__input-auth' name='email' type='email' required/>
-              <span className='form__input-error'>Что-то пошло не так...</span>
-            </label>
-            <label className='form__label-auth'>Пароль
-              <input className='form__input-auth' name='password' type='password' minLength={8} maxLength={15} required/>
-              <span className='form__input-error'>Что-то пошло не так...</span>
-            </label>
-            <button className='button form__button-auth form__button-auth_offset' type='submit'>Войти</button>
-          </form>
-          <div className='login__sign-in'>
-            <p className='login__question'>Ещё не зарегистрированы?</p>
-            <Link className='link login__link' to={appRoutes.signUp}>
-              Регистрация
-            </Link>
-          </div>
-        </section>
-      </main>
-    </>
+    <FormAuth
+      onLogin={onLogin}
+      linkHistory="/"
+      title="Рады видеть!"
+      buttonText={sendingData ? messageSendingData : 'Войти'}
+      typeButton="signin"
+      question="Еще не зарегистрированы? &nbsp;"
+      link="/signup"
+      linkText="Регистрация"
+      onSubmit={handleSubmit}
+      isDisabled={!isValidForm}
+      isMessageErrorAPI={isMessageErrorAPI}
+    >
+
+      <label
+        className="auth-form__label"
+        htmlFor="auth-input-email"
+      >
+        E-mail
+        <input
+          className={`auth-form__input ${isDisabledInput ? 'auth-form__input_disabled' : ''}`}
+          id="auth-input-email"
+          name="email"
+          type="email"
+          placeholder="E-mail"
+          minLength="5"
+          value={values.email || ''}
+          onChange={handleChange}
+          disabled={isDisabledInput}
+          required
+        />
+        <span
+          className="auth-form__input-error"
+        >
+          {errors.email}
+        </span>
+      </label>
+      <label
+        className="auth-form__label"
+        htmlFor="auth-input-password"
+      >
+        Пароль
+        <input
+          className={`auth-form__input ${isDisabledInput ? 'auth-form__input_disabled' : ''}`}
+          id="auth-input-password"
+          name="password"
+          type="password"
+          placeholder="Пароль"
+          minLength="8"
+          value={values.password || ''}
+          onChange={handleChange}
+          disabled={isDisabledInput}
+          required
+        />
+        <span
+          className="auth-form__input-error"
+        >
+          {errors.password}
+        </span>
+      </label>
+
+    </FormAuth>
   );
-};
+}

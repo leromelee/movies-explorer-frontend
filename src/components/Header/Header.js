@@ -1,36 +1,32 @@
-import { useContext } from 'react';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { appRoutes } from '../../utils/constants';
-import headerLogo from '../../images/logo.svg';
-import HeaderMenu from '../HeaderMenu/HeaderMenu';
+import React from 'react';
+
 import './Header.css';
 
-export default function Header() {
-  const loggedIn = useContext(CurrentUserContext).loggedIn;
-  const nav = useNavigate();
-  const location = useLocation();
-  const handleLogoClick = () => {
-    nav(appRoutes.root)
-  }
+import Logotype from '../Logotype/Logotype';
+import Navigation from '../Navigation/Navigation';
 
+export default function Header({ headerLocation, backgroundHeader, loggedIn }) {
   return (
-    <header className={`header
-      ${location.pathname !== appRoutes.root ? ' header_theme-light' : ''}
-      ${(location.pathname === appRoutes.signIn || location.pathname === appRoutes.signUp) ? ' header_stretched' : ''}
-      `}>
-      <img className='header__logo' src={headerLogo} alt='Логотип' onClick={handleLogoClick}/>
-      {!(location.pathname === appRoutes.signIn || location.pathname === appRoutes.signUp) && (
-        <nav className='header__menu'>
-          {loggedIn ?
-            <HeaderMenu /> :
-            <>
-              <Link className='link header__link-register' to={appRoutes.signUp}>Регистрация</Link>
-              <Link className='header__link-login' to={appRoutes.signIn}>Войти</Link>
-            </>
-          }
-        </nav>
-      )}
+    <header
+      className={`header
+        ${headerLocation ? 'hide-section' : ''}
+        ${backgroundHeader ? 'header__main-page' : ''}
+      `}
+    >
+      <div className="container">
+        <div className={`header__wpapper
+          ${loggedIn ? 'header__wpapper_loggedIn' : ''}`}
+        >
+          <Logotype />
+          <nav className={`header__nav
+            ${loggedIn ? 'header__nav_width' : ''}`}
+          >
+            <Navigation
+              loggedIn={loggedIn}
+            />
+          </nav>
+        </div>
+      </div>
     </header>
   );
 }

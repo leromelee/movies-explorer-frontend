@@ -1,15 +1,13 @@
-import Popup from '../Popup/Popup';
-import './Preloader.css';
 import React from 'react';
 
-export default function Preloader({ isOpen }) {
+import './Preloader.css';
+
+export default function Preloader() {
   return (
-    <Popup isOpen={isOpen}>
-      <div className='preloader'>
-        <div className='preloader__container'>
-          <span className='preloader__round' />
-        </div>
+    <div className="preloader">
+      <div className="preloader__container">
+        <span className="preloader__round" />
       </div>
-    </Popup>
+    </div>
   );
-};
+}

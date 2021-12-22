@@ -18,7 +18,7 @@
   font-size: 28px;
   line-height: 34px;
   max-height: 34px;
-  width: 100px;
+  width: 100%;
   box-sizing: border-box;
   background-color: #fff;
   border: none;
@@ -106,10 +106,10 @@
   font-weight: 500;
 }
 
- .search-form__input:-moz-placeholder {
+.search-form__input:-moz-placeholder {
   color: #a0a0a0;
   font-weight: 500;
- }
+}
 
 @media (min-width: 1280px) {
   .search {

@@ -1,18 +1,45 @@
-import Footer from '../Footer/Footer';
-import Header from '../Header/Header';
-import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import React from 'react';
 import SearchForm from '../SearchForm/SearchForm';
-import React from "react";
+import Preloader from '../Preloader/Preloader';
+import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
-export default function Movies({ cards }) {
+export default function Movies({
+  checkboxOn,
+  handleToggleCheckbox,
+  isLoading,
+  movies,
+  savedMovies,
+  onSearchMoviesByValue,
+  isNotFound,
+  isErrorServer,
+  onSaveMoviesCard,
+  onDeleteMoviesCard,
+}) {
+  const likedMovies = savedMovies.map((movie) => movie.movieId);
   return (
-    <>
-      <Header />
-      <main>
-        <SearchForm />
-        <MoviesCardList cards={cards} />
-      </main>
-      <Footer />
-    </>
+    <section className="movies">
+      <div className="container">
+        <SearchForm
+          checkboxOn={checkboxOn}
+          handleToggleCheckbox={handleToggleCheckbox}
+          onSearchMoviesByValue={onSearchMoviesByValue}
+          pageSavedMovies={false}
+        />
+        {isLoading ? (
+          <Preloader />
+        ) : (
+          <MoviesCardList
+            movieCards={movies}
+            savedMovies={savedMovies}
+            isNotFound={isNotFound}
+            isErrorServer={isErrorServer}
+            onSaveMoviesCard={onSaveMoviesCard}
+            onDeleteMoviesCard={onDeleteMoviesCard}
+            pageSavedMovies={false}
+            isLikedMovies={likedMovies}
+          />
+        )}
+      </div>
+    </section>
   );
 }
