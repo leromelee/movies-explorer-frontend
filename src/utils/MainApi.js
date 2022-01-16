@@ -1,91 +1,136 @@
-export const URL = 'https://api.diplomaleromelee.nomoredomains.rocks';
+import { optionsMainApi } from './utils';
+import { MOVIES_IMAGES } from '../utils/constants';
 
-const headers = {
-  Accept: 'application/json',
-  'Content-Type': 'application/json',
-};
+class MainApi {
+  constructor(config) {
+    this._url = config.url;
+    this._headers = config.headers;
+  }
 
-const fixPromise = (res) => (
-  res.ok ? res.json()
-    : Promise.reject(`Произошла ошибка ${res.status}: ${res.statusText}`)
-);
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject("Произошла ошибка");
+  }
 
-export const register = ({ name, password, email }) => fetch(`${URL}/signup`, {
-  method: 'POST',
-  headers,
-  body: JSON.stringify({
-    name, password, email,
-  }),
-})
-  .then((res) => fixPromise(res));
+  checkToken = (token) => {
+    return fetch(`${optionsMainApi.url}/users/me`, {
+      method: "GET",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': "application/json",
+        'Authorization': `Bearer ${token}`,
+      },
+    })
+      .then(this._checkResponse)
+  };
 
-export const signin = ({ password, email }) => fetch(`${URL}/signin`, {
-  method: 'POST',
-  headers,
-  body: JSON.stringify({
-    password, email,
-  }),
-})
-  .then((res) => fixPromise(res));
+  register = (name, email, password) => {
+    return fetch(`${optionsMainApi.url}/signup`, {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name, email, password }),
+    })
+    .then(this._checkResponse)
+  };
 
-export const getUserInfo = (token) => fetch(`${URL}/users/me`, {
-  method: 'GET',
-  headers: {
-    ...headers,
-    Authorization: `Bearer ${token}`,
-  },
-})
-  .then((res) => fixPromise(res));
+  login = (email, password) => {
+    return fetch(`${optionsMainApi.url}/signin`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({email, password }),
+    })
+    .then(this._checkResponse)
+  };
 
 
-export const editUserInfo = (token, { name, email }) => fetch(`${URL}/users/me`, {
-  method: 'PATCH',
-  headers: {
-    ...headers,
-    Authorization: `Bearer ${token}`,
-  },
-  body: JSON.stringify({
-    name, email,
-  }),
-})
-  .then((res) => fixPromise(res));
+  getInitialProfile() {
+    const token = localStorage.getItem('jwt');
 
-export const getSavedMovies = (token) => fetch(`${URL}/movies`, {
-  method: 'GET',
-  headers: {
-    ...headers,
-    Authorization: `Bearer ${token}`,
-  },
-})
-  .then((res) => fixPromise(res));
+    return fetch(`${this._url}/users/me`, {
+      headers: {
+        ...this._headers,
+        'authorization': `Bearer ${token}`,
+      }
+    })
+    .then(this._checkResponse);
+  }
 
-export const saveMovie = (token, movie) => fetch(`${URL}/movies`, {
-  method: 'POST',
-  headers: {
-    ...headers,
-    Authorization: `Bearer ${token}`,
-  },
-  body: JSON.stringify({
-    country: movie.country,
-    director: movie.director,
-    duration: movie.duration,
-    year: movie.year,
-    description: movie.description,
-    image: movie.image,
-    trailer: movie.trailer,
-    nameRU: movie.nameRU,
-    nameEN: movie.nameEN,
-    thumbnail: movie.thumbnail,
-    movieId: movie.movieId,
-  }),
-})
-  .then((res) => fixPromise(res));
+  editProfile(data) {
+    const token = localStorage.getItem('jwt');
 
-export const deleteMovie = (token, movieId) => fetch(`${URL}/movies/${movieId}`, {
-  method: 'DELETE',
-  headers: {
-    ...headers,
-    Authorization: `Bearer ${token}`,
-  },
-})
-  .then((res) => fixPromise(res));
+    return fetch(`${this._url}/users/me`, {
+      method: 'PATCH',
+      headers: {
+        ...this._headers,
+        'authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify(data)
+    })
+    .then(this._checkResponse);
+  }
+
+  getMovies() {
+    const token = localStorage.getItem('jwt');
+
+    return fetch(`${this._url}/movies`, {
+      method: "GET",
+      headers: {
+        ...this._headers,
+        'authorization': `Bearer ${token}`,
+      },
+    })
+    .then(this._checkResponse);
+  }
+
+  saveMovie(data) {
+    const token = localStorage.getItem('jwt');
+
+    return fetch(`${this._url}/movies`, {
+      method: "POST",
+      headers: {
+        ...this._headers,
+        'authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        country: data.country || " ",
+        director: data.director,
+        duration: data.duration,
+        year: data.year,
+        description: data.description,
+        image: `${MOVIES_IMAGES}${data.image.url}`,
+        trailer: data.trailerLink,
+        thumbnail: `${MOVIES_IMAGES}${data.image.formats.thumbnail.url}` ,
+        movieId: data.id,
+        nameRU: data.nameRU,
+        nameEN: data.nameEN,
+
+      }),
+    })
+      .then(this._checkResponse);
+  }
+
+  deleteMovie(deletedItem) {
+    const token = localStorage.getItem('jwt');
+
+    return fetch(`${this._url}/movies/${deletedItem._id}`, {
+      method: "DELETE",
+      headers: {
+        ...this._headers,
+        'authorization': `Bearer ${token}`,
+      },
+    })
+    .then(this._checkResponse);
+  }
+
+}
+
+const mainApi = new MainApi(optionsMainApi);
+
+export default mainApi;

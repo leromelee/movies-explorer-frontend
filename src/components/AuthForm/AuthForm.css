@@ -1,0 +1,151 @@
+.form {
+  width: 100%;
+  position: relative;
+}
+
+.form_type_register {
+  margin-top: 40px;
+  min-height: 463px;
+}
+
+.form_type_login {
+  min-height: 463px;
+}
+
+.form_type_profile {
+  max-width: 410px;
+  margin: 75px auto;
+}
+
+.form__loader {
+  position: fixed;
+  z-index: 3;
+  width: 100%;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background-color: rgb(7 48 66 / 28%);
+  transition: all .5s ease;
+}
+
+.form__heading {
+  color: #000000;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  margin: 0 0 40px 0;
+}
+
+.form__fields {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.form__label {
+  color: #A0A0A0;
+  font-size: 10px;
+  line-height: 12px;
+  display: block;
+  margin: 20px 0 10px 0;
+}
+
+.form__label:first-child {
+  margin-top: 0;
+}
+
+.form__input {
+  background: #F9F9F9;
+  border-radius: 8px;
+  color: #000000;
+  font-size: 13px;
+  line-height: 16px;
+  padding: 15px;
+  border: none;
+  outline: none;
+  margin-bottom: 0px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: background .4s ease;
+}
+
+.form__input:hover, .form__input:focus {
+  background: #ececec;
+}
+
+.form__error {
+  color: #FF3055;
+  font-size: 10px;
+  line-height: 12px;
+  margin-top: 10px;
+}
+
+.form__input_type_error {
+  color: #FF3055;
+}
+
+.form__button {
+  background: #2BE080;
+  border-radius: 3px;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 14px;
+  line-height: 17px;
+  padding: 13px 13px 15px 13px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  margin: 180px 0 16px 0;
+  width: 100%;
+  transition: opacity .4s ease;
+  position: absolute;
+  margin: 0;
+  bottom: 15px;
+}
+
+.form__button:hover {
+  opacity: .7;
+}
+
+.form__button_type_disabled {
+  background: #d0d0d0;
+  cursor: inherit;
+}
+
+.form__button_type_disabled:hover {
+  opacity: 1;
+}
+
+.form_type_login {
+  margin-top: 40px;
+}
+
+
+@media(max-width: 425px) {
+  .auth-menu__link {
+    font-size: 10px;
+  }
+
+  .auth-menu__item {
+    margin-right: 15px;
+  }
+
+  .auth-menu__link_type_login {
+    padding: 7px 12px;
+  }
+
+  .form_type_login {
+    margin-top: 50px;
+    min-height: 590px;
+  }
+
+  .form_type_register {
+    margin-top: 50px;
+    min-height: 590px;
+  }
+
+  .form__heading {
+    text-align: center;
+    margin: 0 0 80px 0;
+  }
+}

@@ -1,115 +1,55 @@
-import React, { useState, useEffect } from 'react';
+import React from "react";
+import  { SHORT_MOVIE_DURATION } from '../../utils/constants';
 import './MoviesCard.css';
 
-export default function MoviesCard({
-  card,
-  onSaveMoviesCard,
-  onDeleteMoviesCard,
-  pageSavedMovies,
-  isLikedMovies,
-  savedMovies,
+function MoviesCard({
+  savedMoviesPage,
+  movie,
+  handleMovieSave,
+  handleMovieTest,
+  image,
+  link,
+  deleteMovie
 }) {
-  const [isLiked, setIsLiked] = useState(false);
 
+const isAdded = handleMovieTest(movie)
 
-  const movie = {
-    country: card.country || 'Страна не указана',
-    director: card.director || 'Режиссер не указан',
-    duration: card.duration || 0,
-    year: card.year || 'Год не указан',
-    description: card.description || 'Описание не указано',
-    image: `https://api.nomoreparties.co${card.image?.url}`,
-    trailer: card?.trailerLink || 'https://youtube.ru',
-    nameRU: card.nameRU || 'Название не указано',
-    nameEN: card.nameEN || 'Title not specified',
-    thumbnail: `https://api.nomoreparties.co${card.image?.url}`,
-    movieId: card.id,
-  };
+function movieDuration() {
+  if(movie.duration <= SHORT_MOVIE_DURATION) {
+    return `${movie.duration} мин`;
+  } else {
+    return `${Math.floor(movie.duration / SHORT_MOVIE_DURATION).toString()} ч ${Math.round((movie.duration % SHORT_MOVIE_DURATION) * 0.6666).toString()} мин`
+  }
+};
 
-  const parseSavedMovies = JSON.parse(localStorage.getItem('savedMovies'));
+function handleFilmSave() {
+  handleMovieSave(movie);
+}
 
-  const currentMovie = parseSavedMovies.find(
-    (movie) => movie.nameRU === card.nameRU,
-  );
-
-  const handleLikeClick = () => {
-    console.log(savedMovies);
-    onSaveMoviesCard(movie)
-      .then(() => setIsLiked(true))
-      .catch((err) => console.log(err));
-  };
-
-  const handleDeleteMovie = () => {
-    onDeleteMoviesCard(card._id)
-      .then(() => setIsLiked(false))
-      .catch((err) => console.log(err));
-  };
-
-  const handleDislikeClick = () => {
-    onDeleteMoviesCard(currentMovie._id)
-      .then(() => setIsLiked(false))
-      .catch((err) => console.log(err));
-  };
-
-  useEffect(() => {
-    if (isLiked && savedMovies) {
-      setIsLiked(true);
-    } else {
-      setIsLiked(false);
-    }
-  }, [isLiked, savedMovies]);
+function handleFilmDelete() {
+  deleteMovie(movie, savedMoviesPage);
+}
 
   return (
-    <li className="movies-card">
-      <div className="movies-card__wrapper">
-        <div className="movies-card__info">
-          <button
-            className="movies-card__button"
-            type="button"
-            aria-label="Информация о фильме"
-          >
-            <h3 className="movies-card__title">
-              {card.nameRU}
-            </h3>
-          </button>
-          <p className="movies-card__time">
-            {`${Math.trunc(card.duration / 60)}ч ${card.duration % 60}м`}
-          </p>
+    <>
+      <div className="cards__container">
+        <div className="cards__info">
+        <h3 className="cards__title">{movie.nameRU}</h3>
+        <p className="card__duration">
+          {movieDuration()}
+        </p>
         </div>
-        {pageSavedMovies ? (
-          <button
-            aria-label="Удалить"
-            type="button"
-            className="movies-card__like movies-card__delete"
-            onClick={handleDeleteMovie}
-          />
+      {savedMoviesPage ? (
+        <button className="button cards__button-delete" onClick={handleFilmDelete}></button>
         ) : (
-          <button
-            className={`
-          movies-card__like
-          ${isLikedMovies || isLiked ? 'movies-card__like_active' : ''}
-          `}
-            type="button"
-            aria-label="Лайк"
-            onClick={isLiked ? handleDislikeClick : handleLikeClick}
-          />
-        )}
-
+         (!isAdded ? <button className="button cards__button-like" onClick={handleFilmSave}></button> : <button className="button cards__button-like_active" onClick={handleFilmDelete}></button> )
+      )}
       </div>
-      <div className="movies-card__image-container">
-        <a
-          className="movies-card__link"
-          href={pageSavedMovies ? card.trailer : card.trailerLink}
-          target="_blank"
-          rel="noreferrer"
-        >
-          <img
-            className="movies-card__image"
-            src={pageSavedMovies ? card.image : `https://api.nomoreparties.co${card.image?.url}`}
-            alt={card.nameRU}
-          />
-        </a>
-      </div>
-    </li>
-  );
+      <a className="movies__link" href={link} target="_blank" rel="noreferrer">
+        <img className="cards__poster" src={image} alt={movie.nameRU} />
+      </a>
+      </>
+  )
 }
+
+export default MoviesCard;

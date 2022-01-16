@@ -1,74 +1,30 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import { siteMenuItems } from '../../utils/utils';
 import './Navigation.css';
-import MenuBurger from '../MenuBurger/MenuBurger';
 
-export default function Navigation({ loggedIn }) {
-  const location = useLocation();
-  const [activedMenuBurger, setActivedMenuBurger] = React.useState(false);
-  const handleClick = () => {
-    setActivedMenuBurger(true);
-  };
+function Navigation(props) {
   return (
-    <ul className="navigation">
-      <li className={`${loggedIn ? 'hide-section' : 'navigation__item'}`}>
-        <Link
-          className="navigation__link navigation__link_type_signup"
-          to="/signup"
-        >
-          Регистрация
-        </Link>
-      </li>
-      <li className={`${loggedIn ? 'hide-section' : 'navigation__item'}`}>
-        <Link
-          className="navigation__link navigation__link_type_signin"
-          to="/signin"
-        >
-          Вход
-        </Link>
-      </li>
+    <nav className={`navigation ${props.isMenuOpen ? "navigation_opened" : ""}`}>
+      <button className="header__mobile-button header__mobile-button_active" type="button" onClick={props.handleCloseMenu}>
+        <span className="header__mobile-line header__mobile-line_active"></span>
+        <span className="header__mobile-line header__mobile-line_active"></span>
+      </button>
+      <ul className="navigation__list">
 
-      <div className={`${loggedIn ? 'navigation__wrapper' : 'hide-section'}`}>
-        <div className="navigation__links-movies">
-          <Link
-            className={`
-                navigation__link navigation__link_type_movies
-                ${location.pathname === '/movies' ? 'navigation__link_active' : ''}
-            `}
-            to="/movies"
-          >
-            Фильмы
-          </Link>
-          <Link
-            className={`
-            navigation__link navigation__link_type_movies
-              ${location.pathname === '/saved-movies' ? 'navigation__link_active' : ''}
-            `}
-            to="/saved-movies"
-          >
-            Сохранённые фильмы
-          </Link>
-        </div>
-        <Link
-          className={`
-            navigation__link_type_profile
-            ${location.pathname === '/profile' ? 'navigation__link_type_profile-active' : ''}
-          `}
-          to="/profile"
-        >
-          Аккаунт
-        </Link>
-        <button
-          className="navigation__button-burger"
-          type="button"
-          aria-label="button-burger"
-          onClick={handleClick}
-        />
-        <MenuBurger
-          activeBurger={activedMenuBurger}
-          setActiveBurger={setActivedMenuBurger}
-        />
-      </div>
-    </ul>
+        <li className="navigation__item navigation__item_type_main">
+          <NavLink exact className="navigation__link" activeClassName="navigation__link_type_active" to="/">Главная</NavLink>
+        </li>
+        {siteMenuItems.map((item) => (
+          <li className="navigation__item" key={item.id}>
+            <NavLink className="navigation__link" activeClassName="navigation__link_type_active" to={item.link}>{item.title}</NavLink>
+          </li>
+        ))}
+      </ul>
+      <Link className="navigation__profile-link" to="/profile">Аккаунт</Link>
+    </nav>
   );
-}
+};
+
+export default Navigation;
+

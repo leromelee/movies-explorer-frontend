@@ -1,32 +1,37 @@
-import React from 'react';
-
-import './Header.css';
-
-import Logotype from '../Logotype/Logotype';
+import React, { useState } from 'react';
+import Logo from '../Logo/Logo';
 import Navigation from '../Navigation/Navigation';
+import AuthMenu from '../AuthMenu/AuthMenu';
+import './Header.css'
 
-export default function Header({ headerLocation, backgroundHeader, loggedIn }) {
+function Header(props) {
+  const { loggedIn } = props;
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  function handleMenuOpen() {
+    setIsMenuOpen(true);
+  }
+  function handleCloseMenu() {
+    setIsMenuOpen(false);
+  }
+
   return (
-    <header
-      className={`header
-        ${headerLocation ? 'hide-section' : ''}
-        ${backgroundHeader ? 'header__main-page' : ''}
-      `}
-    >
-      <div className="container">
-        <div className={`header__wpapper
-          ${loggedIn ? 'header__wpapper_loggedIn' : ''}`}
-        >
-          <Logotype />
-          <nav className={`header__nav
-            ${loggedIn ? 'header__nav_width' : ''}`}
-          >
-            <Navigation
-              loggedIn={loggedIn}
-            />
-          </nav>
-        </div>
+    <header className={`header`}>
+      <div className="header__wrapper">
+        <Logo />
+        {loggedIn ? (
+          <>
+            <Navigation isMenuOpen={isMenuOpen} handleCloseMenu={handleCloseMenu} />
+            <button className="header__mobile-button" type="button" onClick={handleMenuOpen}>
+              <span className="header__mobile-line"></span>
+              <span className="header__mobile-line"></span>
+              <span className="header__mobile-line"></span>
+            </button>
+          </>
+        ) : <AuthMenu />}
       </div>
     </header>
   );
-}
+};
+
+export default Header;

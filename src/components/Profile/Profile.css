@@ -1,0 +1,40 @@
+.profile {
+  padding: 75px 75px;
+}
+
+.profile__logout {
+  margin: 0 auto;
+  display: block;
+  color: #FF3055;
+  border: none;
+  background: no-repeat;
+  outline: none;
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity .4s ease;
+}
+
+.profile__logout:hover {
+  opacity: .7;
+}
+
+@media(max-width: 768px) {
+  .profile {
+    padding: 230px 75px;
+  }
+}
+
+@media(max-width: 425px) {
+  .profile {
+    padding: 68px 30px;
+  }
+
+  .profile__logout {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}
+
+

@@ -1,15 +1,29 @@
-const beatfilmApi = 'https://api.nomoreparties.co/beatfilm-movies';
+import { optionsMovieApi } from './utils';
 
-const fixPromise = (res) => (
-  res.ok ? res.json()
-    : Promise.reject(`Произошла ошибка ${res.status}: ${res.statusText}`)
-);
+class MovieApi {
+  constructor(config) {
+    this._url = config.url;
+    this._headers = config.headers;
+  }
 
-export const getMovies = () => fetch(`${beatfilmApi}`, {
-  method: 'GET',
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-  },
-})
-  .then((res) => fixPromise(res));
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject("Произошла ошибка");
+  }
+
+  getMovies() {
+    return fetch(`${this._url}`, {
+      headers: {
+        ...this._headers,
+      }
+    })
+    .then(this._checkResponse);
+  }
+
+}
+
+const movieApi = new MovieApi(optionsMovieApi);
+
+export default movieApi;

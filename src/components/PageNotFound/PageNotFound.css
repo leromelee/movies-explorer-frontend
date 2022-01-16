@@ -1,68 +1,73 @@
-.page-not-found {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #fafafa;
-  height: 100vh;
-  padding: 10px 10px 132px;
-  box-sizing: border-box;
+.not-found__title {
+  color: #000000;
+  line-height: 169px;
+  text-align: center;
+  font-size: 140px;
+  font-weight: normal;
+  margin: 0 0 5px 0;
 }
 
-.page-not-found__title {
-  margin: 320px 0 10px;
-  font-size: 80px;
-  line-height: 97px;
-  font-weight: 400;
-}
-
-.page-not-found__subtitle {
-  font-size: 12px;
-  line-height: 15px;
+.not-found__subtitle {
+  color: #000000;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
   margin: 0;
 }
 
-.page-not-found__button {
-  border: none;
-  font-size: 12px;
-  line-height: 15px;
-  margin-top: auto;
-  width: 36px;
-  padding: 0;
-  background-color: transparent;
+.not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.not-found__button {
   color: #2BE080;
+  font-size: 14px;
+  line-height: 17px;
+  text-decoration: none;
+  transition: opacity .4s ease;
+  margin-top: 184px;
+  background: none;
+  border: none;
+  outline: none;
   cursor: pointer;
 }
 
+.not-found__button:hover {
+  opacity: .8;
+}
 
-@media (min-width: 768px) {
-  .page-not-found {
-    padding: 25px 38px 80px 30px;
-  }
+.not-found__container {
+  margin-top: 30vh;
+}
 
-  .page-not-found__title {
-    margin: 383px 0 5px;
-
-    font-size: 140px;
-    line-height: 169px;
-  }
-
-  .page-not-found__subtitle {
-    font-size: 16px;
-    line-height: 19px;
-  }
-
-  .page-not-found__button {
-    font-size: 14px;
-    line-height: 17px;
+@media (max-width: 768px) {
+  .not-found {
+    padding-bottom: 100px;
   }
 }
 
-@media (min-width: 768px) {
-  .page-not-found {
-    padding-bottom: 330px;
+@media (max-width: 425px) {
+  .not-found {
+    padding-bottom: 30px;
+  }
+  .not-found__title {
+    font-size: 80px;
+    line-height: 97px;
+    margin-bottom: 10px;
   }
 
-  .page-not-found__title {
-    margin-top: 221px;
+  .not-found__subtitle {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .not-found__link {
+    margin-top: 284px;
+    font-size: 12px;
+    line-height: 15px;
   }
 }
