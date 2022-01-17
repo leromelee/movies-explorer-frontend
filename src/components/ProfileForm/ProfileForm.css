@@ -107,6 +107,7 @@
 
 .form-profile__button_type_disabled {
   cursor: inherit;
+  pointer-events: none;
   opacity: .4;
 }
 

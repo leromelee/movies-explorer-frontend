@@ -1,7 +1,5 @@
 import React from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-
-// Импорт компонентов
 import useFormValidation from '../../hooks/useFormValidation';
 import Error from '../Error/Error';
 import ProfileForm from '../ProfileForm/ProfileForm';
@@ -17,7 +15,6 @@ function Profile(props) {
     errorMessages,
     isValid,
     handleInputChange,
-    reset
   } =  useFormValidation({});
 
   const currentUser = React.useContext(CurrentUserContext);
@@ -31,7 +28,6 @@ function Profile(props) {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     props.handleUpdateUser(values);
-    reset();
   }
 
   return (
