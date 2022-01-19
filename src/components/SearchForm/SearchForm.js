@@ -21,6 +21,14 @@ function SearchForm({
     searchMovies(values.search, isChecked);
   }
 
+  React.useEffect(() => {
+    if ("" === values.search) {
+      searchMovies("", isChecked);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [values.search])
+
   return (
     <section className="search">
       <form className='form search-form' name='search-form' onSubmit={handleSubmit}>

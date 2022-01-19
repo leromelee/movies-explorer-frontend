@@ -6,6 +6,7 @@ import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 import  { SHORT_MOVIE_DURATION } from '../../utils/constants';
+import useFormValidation from "../../hooks/useFormValidation";
 
 
 function SavedMovies({
@@ -46,7 +47,6 @@ function SavedMovies({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [movies])
 
-
   function handleCkecked(evt) {
     setIsChecked(evt.target.checked);
     setCheckbox();
@@ -74,6 +74,7 @@ function SavedMovies({
     const resMovieName = movieName.toLowerCase();
     let searchResult = movies.filter((item) => {
         return item.nameRU.toLowerCase().includes(resMovieName);
+
       });
     return searchResult;
   }
@@ -114,6 +115,7 @@ function SavedMovies({
       {filteredMovies.length === 0 && query && (
         <div className="movies__notfound">Фильмов по заданным параметрам поиска не найдено</div>
       )}
+
       <MoviesCardList
         savedMoviesPage={savedMoviesPage}
         movies={filteredMovies}
