@@ -17,12 +17,10 @@ function Register(props) {
     errorMessages,
     isValid,
     handleInputChange,
-    reset
   } =  useFormValidation({});
   const handleSubmit = (evt) => {
     evt.preventDefault();
     handleRegister(values.name, values.email, values.password);
-    reset();
   }
 
     return (

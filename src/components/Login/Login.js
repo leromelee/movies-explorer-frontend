@@ -15,13 +15,11 @@ function Login(props) {
     errorMessages,
     isValid,
     handleInputChange,
-    reset
   } =  useFormValidation({});
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
     handleLogin(values.email, values.password);
-    reset();
   }
 
     return (

@@ -19,12 +19,6 @@ function useFormValidation () {
       evt.target.closest("form").checkValidity());
   };
 
-  function reset() {
-    setValues({});
-    setErrorMessages({});
-    setIsValid(false);
-  }
-
   return {
     values,
     setValues,
@@ -32,7 +26,6 @@ function useFormValidation () {
     isValid,
     setIsValid,
     handleInputChange,
-    reset
    };
 
 }
