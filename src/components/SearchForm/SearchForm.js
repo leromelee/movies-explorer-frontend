@@ -1,18 +1,57 @@
-import './SearchForm.css';
 import React from 'react';
+import './SearchForm.css';
+import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
+import useFormValidation from '../../hooks/useFormValidation';
 
-export default function SearchForm() {
+function SearchForm({
+  isChecked,
+  searchMovies,
+  handleCkecked,
+}) {
+
+  const {
+    values,
+    errorMessages,
+    isValid,
+    handleInputChange,
+  } =  useFormValidation({});
+
+   const handleSubmit = (evt) => {
+    evt.preventDefault();
+    searchMovies(values.search, isChecked);
+  }
+
+  React.useEffect(() => {
+    if ("" === values.search) {
+      searchMovies("", isChecked);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [values.search])
+
   return (
-    <section className='search'>
-      <form className='form search-form' name='search-form' onSubmit={() => {}}>
+    <section className="search">
+      <form className='form search-form' name='search-form' onSubmit={handleSubmit}>
         <fieldset className='search-form__container'>
-          <input className='search-form__input' name='movie' type='text' placeholder='Фильм' required />
-          <button className='button form__button-submit' type='submit'/>
+          <input
+            className={`search-form__input ${errorMessages.search ? "search__form-input_type_error" : ""}`}
+            type="search"
+            name="search"
+            placeholder="Фильм"
+            onChange={handleInputChange}
+            value={values.search || ''}
+            autoComplete="off"
+            required
+           />
+           {isValid ? '' : <div className="search__form-error">{errorMessages.search}</div>}
+          <button className='button form__button-submit' type='submit'></button>
         </fieldset>
-        <label className='search-form__switcher-label'>
-          <input className='search-form__switcher' name='short-movie'
-                 type='checkbox' defaultChecked />Короткометражки</label>
+
+        <FilterCheckbox filterHandler={handleCkecked}/>
+
       </form>
     </section>
-  );
+  )
 }
+
+export default SearchForm;

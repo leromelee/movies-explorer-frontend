@@ -1,36 +1,37 @@
-import { useContext } from 'react';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { appRoutes } from '../../utils/constants';
-import headerLogo from '../../images/logo.svg';
-import HeaderMenu from '../HeaderMenu/HeaderMenu';
-import './Header.css';
+import React, { useState } from 'react';
+import Logo from '../Logo/Logo';
+import Navigation from '../Navigation/Navigation';
+import AuthMenu from '../AuthMenu/AuthMenu';
+import './Header.css'
 
-export default function Header() {
-  const loggedIn = useContext(CurrentUserContext).loggedIn;
-  const nav = useNavigate();
-  const location = useLocation();
-  const handleLogoClick = () => {
-    nav(appRoutes.root)
+function Header(props) {
+  const { loggedIn } = props;
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  function handleMenuOpen() {
+    setIsMenuOpen(true);
+  }
+  function handleCloseMenu() {
+    setIsMenuOpen(false);
   }
 
   return (
-    <header className={`header
-      ${location.pathname !== appRoutes.root ? ' header_theme-light' : ''}
-      ${(location.pathname === appRoutes.signIn || location.pathname === appRoutes.signUp) ? ' header_stretched' : ''}
-      `}>
-      <img className='header__logo' src={headerLogo} alt='Логотип' onClick={handleLogoClick}/>
-      {!(location.pathname === appRoutes.signIn || location.pathname === appRoutes.signUp) && (
-        <nav className='header__menu'>
-          {loggedIn ?
-            <HeaderMenu /> :
-            <>
-              <Link className='link header__link-register' to={appRoutes.signUp}>Регистрация</Link>
-              <Link className='header__link-login' to={appRoutes.signIn}>Войти</Link>
-            </>
-          }
-        </nav>
-      )}
+    <header className={`header`}>
+      <div className="header__wrapper">
+        <Logo />
+        {loggedIn ? (
+          <>
+            <Navigation isMenuOpen={isMenuOpen} handleCloseMenu={handleCloseMenu} />
+            <button className="header__mobile-button" type="button" onClick={handleMenuOpen}>
+              <span className="header__mobile-line"></span>
+              <span className="header__mobile-line"></span>
+              <span className="header__mobile-line"></span>
+            </button>
+          </>
+        ) : <AuthMenu />}
+      </div>
     </header>
   );
-}
+};
+
+export default Header;

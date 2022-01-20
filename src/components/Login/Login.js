@@ -1,35 +1,84 @@
-import { Link } from 'react-router-dom';
-import { appRoutes } from '../../utils/constants';
-import Header from '../Header/Header';
-import './Login.css';
 import React from 'react';
+import {Link} from 'react-router-dom';
+import useFormValidation from '../../hooks/useFormValidation';
+import Logo from '../Logo/Logo';
+import AuthForm from '../AuthForm/AuthForm';
+import Error from '../Error/Error';
+import Preloader from '../Preloader/Preloader';
+import  { FORM_EMAIL_PATTERN } from '../../utils/constants';
+import './Login.css';
 
-export default function Login() {
-  return (
-    <>
-      <Header />
-      <main>
-        <section className='login'>
-          <form className='form login__form' name='form-login' onSubmit={() => {}}>
-            <h1 className='form__head-auth'>Рады видеть!</h1>
-            <label className='form__label-auth'>E-mail
-              <input className='form__input-auth' name='email' type='email' required/>
-              <span className='form__input-error'>Что-то пошло не так...</span>
-            </label>
-            <label className='form__label-auth'>Пароль
-              <input className='form__input-auth' name='password' type='password' minLength={8} maxLength={15} required/>
-              <span className='form__input-error'>Что-то пошло не так...</span>
-            </label>
-            <button className='button form__button-auth form__button-auth_offset' type='submit'>Войти</button>
-          </form>
-          <div className='login__sign-in'>
-            <p className='login__question'>Ещё не зарегистрированы?</p>
-            <Link className='link login__link' to={appRoutes.signUp}>
-              Регистрация
-            </Link>
+function Login(props) {
+  const handleLogin = props.handleLogin;
+  const {
+    values,
+    errorMessages,
+    isValid,
+    handleInputChange,
+  } =  useFormValidation({});
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    handleLogin(values.email, values.password);
+  }
+
+    return (
+        <>
+        <section className="login">
+          <div className="login__container">
+            <Logo />
+            <AuthForm
+              title="Рады видеть!"
+              name="login"
+              submitBtnText="Войти"
+              onSubmit={handleSubmit}
+              isValid={isValid}
+              values={values}
+            >
+              {props.isLoading && <div className="form__loader"><Preloader /></div>}
+              <fieldset className="form__fields">
+
+                  <label className="form__label" htmlFor="email">E-mail</label>
+                  <input
+                    className={`form__input ${errorMessages.email ? "form__input_type_error" : ""}`}
+                    onChange={handleInputChange}
+                    name="email"
+                    type="email"
+                    placeholder="E-mail"
+                    pattern={FORM_EMAIL_PATTERN}
+                    id="email"
+                    value={values.email || ''}
+                    autoComplete="off"
+                    minLength="2"
+                    required
+                  />
+                  {isValid ? '' : <div className="form-profile__error">{errorMessages.email}</div>}
+
+
+                  <label className="form__label" htmlFor="password">Пароль</label>
+                  <input
+                    className={`form__input ${errorMessages.password ? "form__input_type_error" : ""}`}
+                    onChange={handleInputChange}
+                    name="password"
+                    type="password"
+                    placeholder="Пароль"
+                    id="password"
+                    minLength="2"
+                    value={values.password || ''}
+                    autoComplete="off"
+                    required
+                  />
+                  {isValid ? '' : <div className="form-profile__error">{errorMessages.password}</div>}
+              </fieldset>
+              {props.formAuthError && <Error>{props.formAuthError}</Error>}
+            </AuthForm>
+            <p className="login__subtitle">Еще не зарегистрированы?
+              <Link className="login__link" to="/signup"> Регистрация</Link>
+            </p>
           </div>
         </section>
-      </main>
-    </>
-  );
-};
+       </>
+    )
+}
+
+export default Login;

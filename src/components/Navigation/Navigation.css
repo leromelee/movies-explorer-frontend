@@ -1,0 +1,144 @@
+.navigation {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navigation__list {
+  width: 100%;
+  list-style: none;
+  margin: 0 0 0 66px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.navigation__item {
+  margin-right: 16px;
+}
+
+.navigation__item:last-child {
+  margin-right: 0;
+}
+
+.navigation__item_type_main {
+  display: none;
+}
+
+.navigation__link {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 18px;
+  color:#000;
+  text-decoration: none;
+  transition: opacity 0.4s ease;
+}
+
+.navigation__link_type_active {
+  font-weight: 500;
+}
+
+.navigation__link:hover {
+  opacity: .7;
+}
+
+.navigation__profile-link {
+  font-size: 14px;
+  line-height: 1.14;
+  padding: 8px 20px;
+  border-radius: 20px;
+  color: black;
+  background-color: #f9f9f9;
+  text-decoration: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: opacity 0.4s ease;
+}
+
+.navigation__profile-link:hover {
+  opacity: .7;
+}
+
+@media(max-width: 768px) {
+  .header__wrapper{
+      padding: 18px 30px;
+  }
+
+  .navigation {
+    width: 520px;
+    background: #fff;
+    height: 100%;
+    position: fixed;
+    z-index: 999999;
+    top: 0;
+    right: -520px;
+    flex-direction: column;
+    transition: right .4s ease-in-out;
+    justify-content: space-between;
+  }
+
+  .navigation_opened {
+    right: 0;
+  }
+
+  .navigation__list {
+    margin-top: 160px;
+    flex-direction: column;
+    align-items: center;
+    margin: 160px 0 0 0;
+  }
+
+  .navigation__item {
+    margin-right: 0;
+    margin-bottom: 28px;
+  }
+
+  .navigation__item_type_main {
+    display: block;
+  }
+
+  .navigation__link {
+    font-size: 18px;
+    line-height: 22px;
+    padding-bottom: 4px;
+    font-weight: 500;
+  }
+
+  .navigation__link_type_active {
+    border-bottom: 2px solid #000;
+  }
+
+  .navigation__profile-link {
+    margin-bottom: 50px;
+  }
+}
+
+@media(max-width: 500px) {
+  .navigation {
+    width: 100%;
+  }
+}
+
+@media(max-width: 425px) {
+  .header__wrapper{
+    padding: 18px 14px;
+  }
+
+  .navigation__list {
+    margin-top: 160px;
+    flex-direction: column;
+    align-items: center;
+    margin: 144px 0 0 0;
+  }
+
+  .navigation__item {
+    margin-right: 0;
+    margin-bottom: 25px;
+  }
+
+  .navigation__profile-link {
+    margin-bottom: 48px;
+  }
+}
